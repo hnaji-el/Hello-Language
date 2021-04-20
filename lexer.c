@@ -109,6 +109,10 @@ t_token	*lexer_get_next_token(t_lexer *lexer)
 				return (lexer_advance_with_token(lexer, init_token(TOKEN_RPAREN, lexer_get_current_char_as_string(lexer))));
 			case ';':
 				return (lexer_advance_with_token(lexer, init_token(TOKEN_SEMI, lexer_get_current_char_as_string(lexer))));
+			case ',':
+				return (lexer_advance_with_token(lexer, init_token(TOKEN_COMMA, lexer_get_current_char_as_string(lexer))));
+			default:
+				return (lexer_advance_with_token(lexer, init_token(TOKEN_NO_TOKEN, lexer_get_current_char_as_string(lexer))));
 		}
 		lexer_advance(lexer);
 	}

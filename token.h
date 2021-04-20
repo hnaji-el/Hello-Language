@@ -15,6 +15,8 @@ typedef enum	e_token_type
 	TOKEN_LPAREN,
 	TOKEN_RPAREN,
 	TOKEN_SEMI,
+	TOKEN_COMMA,
+	TOKEN_NO_TOKEN,
 	TOKEN_EOF
 }				t_token_type;
 
