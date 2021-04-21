@@ -13,13 +13,9 @@ typedef struct	s_visitor
 t_ast	*visitor_visit(t_ast *ast);
 
 t_ast	*visitor_visit_compound(t_ast *ast);
-
 t_ast	*visitor_visit_variable_definition(t_ast *ast);
-
 t_ast	*visitor_visit_string(t_ast *ast);
-
 t_ast	*visitor_visit_function_call(t_ast *ast);
-
 t_ast	*visitor_visit_variable(t_ast *ast);
 
 #endif

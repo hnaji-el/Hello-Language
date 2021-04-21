@@ -7,14 +7,13 @@ int		main(void)
 	t_parser	*parser;
 	t_ast		*ast;
 
-	lexer = init_lexer("var name = \"hamid\";\n""print(name);\n");
+	lexer = init_lexer("var name = \"hamid\";\n""print(name, name1);\n");
 	parser = init_parser(lexer);
 	ast = parser_parse(parser);
 	printf(
 			"%d\n%d\n%s\n",
 			ast->type,
 			ast->compound_size,
-			ast->compound_value[1]->variable_value
 			);
 	return (0);
 

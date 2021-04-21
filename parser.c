@@ -74,8 +74,8 @@ t_ast		*parser_parse_function_call(t_parser *parser)
 	t_ast	*ast_expr;
 
 	ast = init_ast(AST_FUNCTION_CALL);
+	ast->function_call_name = parser->prev_token->value;
 	parser_expected_token(parser, TOKEN_LPAREN);
-	ast->function_call_name = parser->cur_token->value;
 	ast->function_call_args = (t_ast **)malloc(sizeof(t_ast *));
 	ast_expr = parser_parse_expr(parser);
 	ast->function_call_args[0] = ast_expr;
@@ -91,6 +91,7 @@ t_ast		*parser_parse_function_call(t_parser *parser)
 		ast_expr = parser_parse_expr(parser);
 		ast->function_call_args[ast->function_call_args_size - 1] = ast_expr;
 	}
+	parser_expected_token(parser, TOKEN_RPAREN);
 	return (ast);
 }
 
@@ -162,6 +163,8 @@ t_ast		*parser_parse_statements(t_parser *parser)
 	while (parser->cur_token->type == TOKEN_SEMI)
 	{
 		parser_expected_token(parser, TOKEN_SEMI);
+		if (parser->cur_token->type == TOKEN_EOF)
+			break ;
 		ast->compound_size += 1;
 		ast->compound_value = realloc(
 				ast->compound_value,
