@@ -160,7 +160,7 @@ t_ast		*parser_parse_statements(t_parser *parser)
 	ast_statement = parser_parse_statement(parser);
 	ast->compound_value[0] = ast_statement;
 	ast->compound_size += 1;
-	while (parser->cur_token->type == TOKEN_SEMI)
+	while (1)
 	{
 		parser_expected_token(parser, TOKEN_SEMI);
 		if (parser->cur_token->type == TOKEN_EOF)

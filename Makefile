@@ -1,9 +1,9 @@
 
 NAME = hello.out
 
-SRCS = main.c token.c lexer.c parser.c ast.c
+SRCS = main.c token.c lexer.c parser.c ast.c visitor.c
 
-INCLUDES = token.h lexer.h parser.h ast.h
+INCLUDES = token.h lexer.h parser.h ast.h visitor.h
 
 FLAGS = -Wall -Wextra -Werror
 
