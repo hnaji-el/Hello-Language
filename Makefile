@@ -1,9 +1,18 @@
 
 NAME = hello.out
 
-SRCS = main.c token.c lexer.c parser.c ast.c visitor.c
+SRCS = main.c \
+	   ./lexer/token.c \
+	   ./lexer/lexer.c \
+	   ./parser/parser.c \
+	   ./ast/ast.c \
+	   ./executor/visitor.c
 
-INCLUDES = token.h lexer.h parser.h ast.h visitor.h
+INCLUDES = ./lexer/token.h \
+		   ./lexer/lexer.h \
+		   ./parser/parser.h \
+		   ./ast/ast.h \
+		   ./executor/visitor.h
 
 FLAGS = -Wall -Wextra -Werror
 

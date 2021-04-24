@@ -2,7 +2,7 @@
 #ifndef VISITOR_H
 # define VISITOR_H
 
-# include "parser.h"
+# include "../parser/parser.h"
 
 typedef struct	s_visitor
 {

@@ -1,5 +1,5 @@
 
-#include "visitor.h"
+#include "./executor/visitor.h"
 
 int		main(void)
 {
@@ -8,7 +8,7 @@ int		main(void)
 	t_ast		*ast;
 	t_visitor	*visitor;
 
-	lexer = init_lexer("var name = hamid;\n""var name1 = \"naji\";\n""print(name, name1);\n");
+	lexer = init_lexer("var name = \"naji\";\n""print(name);\n");
 	parser = init_parser(lexer);
 	ast = parser_parse(parser);
 	visitor = init_visitor();
