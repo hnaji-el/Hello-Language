@@ -2,7 +2,7 @@
 #ifndef AST_H
 # define AST_H
 
-#include <stdlib.h>
+# include <stdlib.h>
 
 typedef enum	e_ast_type
 {
