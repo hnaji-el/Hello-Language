@@ -186,6 +186,7 @@ t_ast		*parser_parse_statements(t_parser *parser)
 
 /*
  * main entry point of the PARSER.
+ *
  * return whole AST tree of our entire source code.
  * this function return the source code but as an AST tree.
  */
