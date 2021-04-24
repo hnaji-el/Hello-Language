@@ -13,23 +13,53 @@ t_visitor	*init_visitor(void)
 
 t_ast	*visitor_visit_string(t_ast *node, t_visitor *visitor)
 {
+	t_visitor	*vis;
+
+	vis = visitor;
+	return (node);
 }
 
 t_ast	*visitor_visit_variable(t_ast *node, t_visitor *visitor)
 {
-}
-
-t_ast	*builtin_print_function(t_ast **args, int args_size, t_visitor *visitor)
-{
+	t_ast	*vardef;
 	int		i;
 
 	i = 0;
-	while (i < args_size)
+	while (i < visitor->variable_definitions_size)
 	{
-		visitor_visit(args[i]);
+		vardef = visitor->variable_definitions[i];
+		if (strcmp(node->variable_value, vardef->var_def_name) == 0)
+			return (visitor_visit(vardef->var_def_value, visitor));
 		i++;
 	}
-	return (node);
+	printf(
+			"Undefined variable `%s'\n",
+			node->variable_value
+			);
+	exit(EXIT_FAILURE);
+}
+
+t_ast	*builtin_function_print(t_ast *node, t_visitor *visitor)
+{
+	t_ast	*var_value;
+	int		i;
+
+	i = 0;
+	while (i < node->function_call_args_size)
+	{
+		var_value = visitor_visit(node->function_call_args[i], visitor);
+		switch (var_value->type)
+		{
+			case AST_STRING:
+				printf("%s\n", var_value->string_value);
+				break ;
+			default:
+				printf("Undefined data type with type `%d' \n", var_value->type);
+				exit(EXIT_FAILURE);
+		}
+		i++;
+	}
+	return (init_ast(AST_NOOP));
 }
 
 t_ast	*visitor_visit_function_call(t_ast *node, t_visitor *visitor)
@@ -38,7 +68,7 @@ t_ast	*visitor_visit_function_call(t_ast *node, t_visitor *visitor)
 
 	i = 0;
 	if (strcmp(node->function_call_name, "print") == 0)
-		return (builtin_print_function(node->function_call_args, node->function_call_args_size, visitor));
+		return (builtin_function_print(node, visitor));
 	printf(
 			"Undefined function `%s'\n",
 			node->function_call_name
@@ -48,20 +78,20 @@ t_ast	*visitor_visit_function_call(t_ast *node, t_visitor *visitor)
 
 t_ast	*visitor_visit_variable_definition(t_ast *node, t_visitor *visitor)
 {
-	if (visitor->variable_definition == (void *)0)
+	if (visitor->variable_definitions == (void *)0)
 	{
-		visitor->variable_definition = (t_ast **)malloc(sizeof(t_ast *));
-		visitor->variable_definition[0] = node;
-		visitor->variable_definition_size += 1;
+		visitor->variable_definitions = (t_ast **)malloc(sizeof(t_ast *));
+		visitor->variable_definitions[0] = node;
+		visitor->variable_definitions_size += 1;
 	}
 	else
 	{
-		visitor->variable_definition_size += 1;
-		visitor->variable_definition = realloc(
-				visitor->variable_definition,
-				visitor->variable_definition_size * sizeof(t_ast *)
+		visitor->variable_definitions_size += 1;
+		visitor->variable_definitions = realloc(
+				visitor->variable_definitions,
+				visitor->variable_definitions_size * sizeof(t_ast *)
 				);
-		visitor->variable_definition[visitor->variable_definition_size - 1] = node;
+		visitor->variable_definitions[visitor->variable_definitions_size - 1] = node;
 	}
 	return (node);
 }
@@ -108,7 +138,9 @@ t_ast	*visitor_visit(t_ast *node, t_visitor *visitor)
 			return (visitor_visit_function_call(node, visitor));
 		case AST_VARIABLE:
 			return (visitor_visit_variable(node, visitor));
-		default:
-			return (init_ast(AST_NOOP));
+		case AST_NOOP:
+			return (node);
 	}
+	printf("Uncaught statement of type `%d'\n", node->type);
+	exit(EXIT_FAILURE);
 }

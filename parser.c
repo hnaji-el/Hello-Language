@@ -55,6 +55,10 @@ t_ast		*parser_parse_expr(t_parser *parser)
 				   	parser->cur_token->type
 					);
 			exit(EXIT_FAILURE);
+		/*
+		default:
+			return (init_ast(AST_NOOP));
+		*/
 	}
 }
 
@@ -147,6 +151,10 @@ t_ast		*parser_parse_statement(t_parser *parser)
 				   	parser->cur_token->type
 					);
 			exit(EXIT_FAILURE);
+		/*
+		default:
+			return (init_ast(AST_NOOP));
+		*/
 	}
 }
 
